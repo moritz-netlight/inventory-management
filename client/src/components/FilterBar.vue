@@ -102,34 +102,37 @@ export default {
 
 <style scoped>
 .filters-bar {
-  background: #f8fafc;
-  border-bottom: 1px solid #e2e8f0;
-  padding: 0.75rem 0;
+  background: var(--surface-muted);
+  border-bottom: 1px solid var(--border);
+  padding: var(--space-3) 0;
   position: sticky;
-  top: 70px;
+  /* Sits directly under the sticky page bar, so it offsets by that bar's height. */
+  top: var(--page-bar-height);
   z-index: 90;
 }
 
 .filters-container {
-  max-width: 1600px;
+  max-width: var(--content-max);
   margin: 0 auto;
-  padding: 0 2rem;
+  padding: 0 var(--space-5);
   display: flex;
   align-items: center;
-  gap: 1rem;
+  gap: var(--space-4);
 }
 
 .filters-grid {
   display: flex;
   align-items: center;
-  gap: 1rem;
+  gap: var(--space-4);
+  /* Filters wrap onto extra rows instead of overflowing on narrow screens. */
+  flex-wrap: wrap;
   flex: 1;
 }
 
 .filter-group {
   display: flex;
   align-items: center;
-  gap: 0.5rem;
+  gap: var(--space-2);
 }
 
 .filter-group label {
@@ -140,9 +143,9 @@ export default {
 }
 
 .filter-select {
-  padding: 0.4rem 0.75rem;
+  padding: var(--space-2) var(--space-3);
   border: 1px solid #cbd5e1;
-  border-radius: 6px;
+  border-radius: var(--radius);
   font-size: 0.813rem;
   color: #0f172a;
   background: white;
@@ -166,10 +169,10 @@ export default {
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: 0.4rem;
+  padding: var(--space-2);
   background: white;
-  border: 1px solid #e2e8f0;
-  border-radius: 6px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
   color: #64748b;
   cursor: pointer;
   transition: all 0.2s;
