@@ -29,6 +29,37 @@
 
       <div class="card">
         <div class="card-header">
+          <h3 class="card-title">{{ t('orders.submittedOrders') }} ({{ submittedOrders.length }})</h3>
+        </div>
+        <div v-if="submittedOrders.length === 0" class="empty-state">{{ t('orders.noSubmittedOrders') }}</div>
+        <div v-else class="table-container">
+          <table class="orders-table">
+            <thead>
+              <tr>
+                <th class="col-order-number">{{ t('orders.table.orderNumber') }}</th>
+                <th class="col-date">{{ t('orders.table.orderDate') }}</th>
+                <th class="col-date">{{ t('orders.table.expectedDelivery') }}</th>
+                <th class="col-date">{{ t('orders.leadTimeDays') }}</th>
+                <th class="col-date">{{ t('orders.table.items') }}</th>
+                <th class="col-value">{{ t('orders.table.totalValue') }}</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr v-for="order in submittedOrders" :key="order.id">
+                <td class="col-order-number"><strong>{{ order.order_number }}</strong></td>
+                <td class="col-date">{{ formatDate(order.order_date) }}</td>
+                <td class="col-date">{{ formatDate(order.expected_delivery) }}</td>
+                <td class="col-date">{{ getLeadTimeLabel(order) }}</td>
+                <td class="col-date">{{ t('orders.itemsCount', { count: order.items.length }) }}</td>
+                <td class="col-value"><strong>{{ currencySymbol }}{{ order.total_value.toLocaleString() }}</strong></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-header">
           <h3 class="card-title">{{ t('orders.allOrders') }} ({{ orders.length }})</h3>
         </div>
         <div class="table-container">
@@ -133,12 +164,32 @@ export default {
       return orders.value.filter(order => order.status === status)
     }
 
+    // Derived from the already-loaded orders so the existing table is untouched
+    const submittedOrders = computed(() => orders.value.filter(order => order.status === 'Submitted'))
+
+    // Lead time = expected_delivery - order_date in whole days. The API returns
+    // naive ISO timestamps (no timezone), so both dates are parsed the same way
+    // and the rounding absorbs any sub-day time-of-day difference.
+    // Returns null when either date is invalid.
+    const getLeadTimeDays = (order) => {
+      const start = new Date(order.order_date)
+      const end = new Date(order.expected_delivery)
+      if (isNaN(start.getTime()) || isNaN(end.getTime())) return null
+      return Math.round((end - start) / (24 * 60 * 60 * 1000))
+    }
+
+    const getLeadTimeLabel = (order) => {
+      const days = getLeadTimeDays(order)
+      return days === null ? '-' : t('orders.daysValue', { count: days })
+    }
+
     const getOrderStatusClass = (status) => {
       const statusMap = {
         'Delivered': 'success',
         'Shipped': 'info',
         'Processing': 'warning',
-        'Backordered': 'danger'
+        'Backordered': 'danger',
+        'Submitted': 'info'
       }
       return statusMap[status] || 'info'
     }
@@ -160,6 +211,8 @@ export default {
       loading,
       error,
       orders,
+      submittedOrders,
+      getLeadTimeLabel,
       getOrdersByStatus,
       getOrderStatusClass,
       formatDate,
@@ -172,6 +225,12 @@ export default {
 </script>
 
 <style scoped>
+.empty-state {
+  padding: var(--space-5);
+  text-align: center;
+  color: #64748b;
+}
+
 /* Fixed table layout to prevent column shifting */
 .orders-table {
   table-layout: fixed;
@@ -224,7 +283,7 @@ export default {
 .items-summary::before {
   content: '▶';
   display: inline-block;
-  margin-right: 0.375rem;
+  margin-right: var(--space-1);
   font-size: 0.75rem;
   transition: transform 0.2s;
 }
@@ -243,12 +302,12 @@ export default {
   position: absolute;
   top: 100%;
   left: 0;
-  margin-top: 0.5rem;
+  margin-top: var(--space-2);
   background: white;
   border: 1px solid #e2e8f0;
   border-radius: 8px;
   box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
-  padding: 0.75rem;
+  padding: var(--space-3);
   z-index: 10;
   min-width: 300px;
   max-width: 400px;
@@ -257,8 +316,8 @@ export default {
 .item-entry {
   display: flex;
   flex-direction: column;
-  gap: 0.25rem;
-  padding: 0.5rem;
+  gap: var(--space-1);
+  padding: var(--space-2);
   border-bottom: 1px solid #f1f5f9;
 }
 

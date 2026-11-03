@@ -6,8 +6,16 @@ export default {
     orders: 'Orders',
     finance: 'Finance',
     demandForecast: 'Demand Forecast',
+    restocking: 'Restocking',
     companyName: 'Catalyst Components',
-    subtitle: 'Inventory Management System'
+    subtitle: 'Inventory Management System',
+    reports: 'Reports',
+    skipToContent: 'Skip to main content',
+    openMenu: 'Open navigation menu',
+    groupOverview: 'Overview',
+    groupOperations: 'Operations',
+    groupPlanning: 'Planning',
+    groupFinance: 'Finance'
   },
 
   // Dashboard
@@ -112,6 +120,10 @@ export default {
     onTimeDelivery: 'On-Time Delivery',
     itemsCount: '{count} items',
     quantity: 'Qty',
+    submittedOrders: 'Submitted Orders',
+    noSubmittedOrders: 'No submitted orders',
+    leadTimeDays: 'Lead Time (days)',
+    daysValue: '{count} days',
     table: {
       orderNumber: 'Order Number',
       orderId: 'Order ID',
@@ -204,9 +216,36 @@ export default {
     shipped: 'Shipped',
     processing: 'Processing',
     backordered: 'Backordered',
+    submitted: 'Submitted',
     inStock: 'In Stock',
     lowStock: 'Low Stock',
     adequate: 'Adequate'
+  },
+
+  // Restocking
+  restocking: {
+    title: 'Restocking',
+    description: 'Get recommended purchase orders that fit your budget',
+    budget: 'Available Budget',
+    spent: 'Spent',
+    remaining: 'Remaining',
+    recommendedItems: 'Recommended Items',
+    noItems: 'No items fit the selected budget',
+    placeOrder: 'Place Order',
+    submitting: 'Submitting...',
+    loadError: 'Failed to load recommendations',
+    orderError: 'Failed to place order',
+    orderSuccess: 'Order {orderNumber} placed. Expected delivery: {date}',
+    table: {
+      sku: 'SKU',
+      name: 'Name',
+      trend: 'Trend',
+      forecastedDemand: 'Forecasted Demand',
+      onHand: 'On Hand',
+      quantity: 'Order Qty',
+      unitCost: 'Unit Cost',
+      lineCost: 'Line Cost'
+    }
   },
 
   // Trends

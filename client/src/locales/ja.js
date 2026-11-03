@@ -6,8 +6,16 @@ export default {
     orders: '注文',
     finance: '財務',
     demandForecast: '需要予測',
+    restocking: '補充発注',
     companyName: '触媒コンポーネンツ',
-    subtitle: '在庫管理システム'
+    subtitle: '在庫管理システム',
+    reports: 'レポート',
+    skipToContent: 'メインコンテンツへ移動',
+    openMenu: 'ナビゲーションメニューを開く',
+    groupOverview: '概要',
+    groupOperations: '運用',
+    groupPlanning: '計画',
+    groupFinance: '財務'
   },
 
   // Dashboard
@@ -112,6 +120,10 @@ export default {
     onTimeDelivery: '定時配達',
     itemsCount: '{count}件',
     quantity: '数量',
+    submittedOrders: '発注済みの注文',
+    noSubmittedOrders: '発注済みの注文はありません',
+    leadTimeDays: '納期（日数）',
+    daysValue: '{count}日',
     table: {
       orderNumber: '注文番号',
       orderId: '注文ID',
@@ -204,9 +216,36 @@ export default {
     shipped: '出荷済み',
     processing: '処理中',
     backordered: 'バックオーダー',
+    submitted: '発注済み',
     inStock: '在庫あり',
     lowStock: '在庫僅少',
     adequate: '適量'
+  },
+
+  // Restocking
+  restocking: {
+    title: '補充発注',
+    description: '予算に合わせた推奨発注内容を表示します',
+    budget: '利用可能な予算',
+    spent: '使用額',
+    remaining: '残額',
+    recommendedItems: '推奨品目',
+    noItems: '選択した予算に収まる品目はありません',
+    placeOrder: '発注する',
+    submitting: '送信中...',
+    loadError: '推奨内容の読み込みに失敗しました',
+    orderError: '発注に失敗しました',
+    orderSuccess: '注文 {orderNumber} を発注しました。配達予定日: {date}',
+    table: {
+      sku: 'SKU',
+      name: '名称',
+      trend: 'トレンド',
+      forecastedDemand: '需要予測',
+      onHand: '現在庫',
+      quantity: '発注数量',
+      unitCost: '単価',
+      lineCost: '小計'
+    }
   },
 
   // Trends
